@@ -12,13 +12,6 @@ export default (options = { snakecase: true }) => store => {
     const succeded = `${mutation.type}${succededString}`
     const failed = `${mutation.type}${failedString}`
 
-    store.hotUpdate({
-      mutations: {
-        [succeded] (state, payload) {},
-        [failed] (state, payload) {}
-      }
-    })
-
     mutation.payload.then((response) => {
       store.commit(succeded, response)
     }).catch((response) => {
