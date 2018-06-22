@@ -1,4 +1,4 @@
-export default (options = { snakecase: true }) => store => {
+export default store => {
   store.subscribe((mutation, state) => {
     console.log('plugin called')
 
@@ -10,16 +10,10 @@ export default (options = { snakecase: true }) => store => {
 
     console.log('keep working')
 
-    const succededString = options.snakecase ? '_SUCCEEDED' : 'Succeeded'
-    const failedString = options.snakecase ? '_FAILED' : 'Failed'
-
-    const succeded = `${mutation.type}${succededString}`
-    const failed = `${mutation.type}${failedString}`
-
     mutation.payload.then((response) => {
-      store.commit(succeded, response)
+      store.commit(`${mutation.type}_SUCCEEDED`, response)
     }).catch((response) => {
-      store.commit(failed, response)
+      store.commit(`${mutation.type}_FAILED`, response)
     })
   })
 }
